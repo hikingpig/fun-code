@@ -21,19 +21,19 @@ bool enough_prime(int needed, vector<bool> k)
 
 vector<bool> erasthostenes_sieve(int start, int needed, vector<bool> k)
 {
-  int found = 0;
+  int found = 0; 
   for (int i = 0; i < k.size(); ++i)
   {
     if (k.at(i))
     {
       ++found;
-      if (needed <= found)
+      if (needed <= found) // if found primes exceeded needed primes, stop searching
       {
         cout << "\u237E\u237E\u237E\u237E\u237E Enough Primes. DONE! Throw me a party boss!\n";
         return k;
       }
       if (start < i)
-        start = i; // if 'start' is behind sieved value
+        start = i; // if 'start' is behind sieved value, use the step value.
       int s = (start / i + 1) * i;
       for (int j = s; j < k.size(); j += i)
         k.at(j) = false;
@@ -72,7 +72,7 @@ int main()
     {
       k.push_back(true);
     }
-    k = erasthostenes_sieve(start - 1, needed, k); // start value is not yet sieved
+    k = erasthostenes_sieve(start - 1, needed, k); // include 'start' value in search range
     enough = enough_prime(needed, k);
     start = end;
     end = 2 * end;
