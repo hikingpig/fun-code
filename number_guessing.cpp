@@ -20,13 +20,9 @@ int main()
     cout << "Is your number smaller than or equal " << mid << "? (y/n)\n";
     cin >> ans;
     if (ans == 'y')
-    {
       max = mid;
-    }
     else
-    {
       min = mid + 1;
-    }
   }
   cout << "Your number is " << max << '\n';
 }
