@@ -1,10 +1,12 @@
 #include "std_lib_facilities.h"
 
 /*
-- iterate function is a constant member of the class
-- the iteration index is passed from outside
-- iteration will stop when the iteration index exceeds vector's size.
-- the condition to stop iterating is the iteration idex < 0. we deliberately set it at the end of iteration
+- the class's vector data are not exposed
+- to read these data, we use iterator
+- the iterator doesn't change the state, it is a constant member of the class
+- the iterator can be used in overloading operator such as << and ==
+- each time `iterate` is called, we move to the next elements of the vectors
+- iteration stop when the index exceeds the vector's size
 */
 
 const string quit = "NoName";
@@ -92,11 +94,37 @@ ostream &operator<<(ostream &os, const Name_pairs &np)
   return os;
 }
 
+bool operator==(const Name_pairs &np1, const Name_pairs &np2)
+{
+  int idx1 = 0;
+  int idx2 = 0;
+  string s1, s2;
+  double a1, a2;
+  np1.iterate(idx1, s1, a1);
+  np2.iterate(idx2, s2, a2);
+  while (idx1 > 0 && idx2 > 0)
+  {
+    if (!(s1 == s2 && a1 == a2))
+      return false;
+    np1.iterate(idx1, s1, a1);
+    np2.iterate(idx2, s2, a2);
+  }
+  if (idx1 == idx2) // handle empty vector too
+    return true;
+  else // size of vectors are not the same
+    return false;
+}
 int main()
 {
   Name_pairs np;
   np.read_names();
   np.read_ages();
-  np.my_sort();
   cout << np;
+
+  Name_pairs np2;
+  np2.read_names();
+  np2.read_ages();
+  cout << np2;
+
+  cout << (np == np2) << '\n';
 }
