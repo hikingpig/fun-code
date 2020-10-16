@@ -155,7 +155,10 @@ ostream &operator<<(ostream &os, const Roman_num &r)
 istream &operator>>(istream &is, Roman_num &r)
 {
   string s;
-  is >> s;
+  char ch;
+  while (is >> ch && is_roman(ch))
+    s += ch;
+  is.putback(ch);
   r = Roman_num(s);
   return is;
 }
