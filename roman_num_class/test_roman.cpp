@@ -14,7 +14,7 @@ int main()
   Roman_num b{"iv"};
   for (Roman_num r{"i"}; ist >> r;)
     cout << r << '\n';
-
+  
   cout << a + b << '\n';
   cout << a - b << '\n';
   cout << a * b << '\n';

@@ -9,18 +9,51 @@ bool is_roman(char c)
 // check if a string is a valid roman number
 bool is_valid(string s)
 {
-  int repeated = 0;
+  int repeated_i = 0;
+  int repeated_v = 0;
+  int repeated_x = 0;
+  int repeated_l = 0;
+  int repeated_c = 0;
+  int repeated_d = 0;
+  int repeated_m = 0;
   for (int i = 0; i < s.length(); ++i)
   {
     if (!is_roman(s[i]))
       return false;
-    if (i > 0 && s[i] == s[i - 1])
-      ++repeated;
-    else
-      repeated = 0;
+    switch (s[i])
+    {
+    case 'i':
+    case 'I':
+      ++repeated_i;
+      break;
+    case 'v':
+    case 'V':
+      ++repeated_v;
+      break;
+    case 'x':
+    case 'X':
+      ++repeated_x;
+      break;
+    case 'l':
+    case 'L':
+      ++repeated_l;
+      break;
+    case 'c':
+    case 'C':
+      ++repeated_c;
+      break;
+    case 'd':
+    case 'D':
+      ++repeated_d;
+      break;
+    case 'm':
+    case 'M':
+      ++repeated_m;
+      break;
+    }
+    if (repeated_i > 3 || repeated_v > 3 || repeated_x > 3 || repeated_l > 3 || repeated_c > 3 || repeated_d > 3 || repeated_m > 3)
+      return false;
   }
-  if (repeated > 3)
-    return false;
   return true;
 }
 
@@ -156,9 +189,13 @@ istream &operator>>(istream &is, Roman_num &r)
 {
   string s;
   char ch;
-  while (is >> ch && is_roman(ch))
+
+  // use get(ch) to read whitespaces
+  // don't use noskipws. it creates a mess!
+  while (is.get(ch) && is_roman(ch))
     s += ch;
-  is.putback(ch);
+  if (!isspace(ch))
+    is.putback(ch);
   r = Roman_num(s);
   return is;
 }
