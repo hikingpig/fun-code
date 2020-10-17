@@ -7,9 +7,23 @@
 
 int main()
 {
+  // setup file streams
   ifstream ist1{"tmp1.txt"};
+  if (!ist1)
+    error("Unable to open input file ", "tmp1.txt");
+  ist1.exceptions(ist1.exceptions() | ios_base::badbit);
+
   ifstream ist2{"tmp2.txt"};
+  if (!ist2)
+    error("Unable to open input file ", "tmp2.txt");
+  ist2.exceptions(ist2.exceptions() | ios_base::badbit);
+
   ofstream ost{"tmp3.txt"};
+  if (!ost)
+    error("Unable to open output file ", "tmp3.txt");
+  ost.exceptions(ost.exceptions() | ios_base::badbit);
+  // end setup file streams
+
   string w1;
   string w2;
   ist1 >> w1;
